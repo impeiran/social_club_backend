@@ -65,7 +65,7 @@ app.get('*', (req, res) => {
   res.sendFile(__dirname + '/public/index.html')
 })
 
-// 主http服务
+// http服务
 app.listen(CONFIG.port, '0.0.0.0',() => {
   const url = `http://localhost:${CONFIG.port}`
   console.log(chalk.blue('[social-club] Application is running at ' + chalk.underline(url)))
