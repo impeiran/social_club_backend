@@ -8,7 +8,7 @@ const CONFIG = {
 
   // 密钥及token配置
   secret: 'jiangpeiran',
-  tokenExpire: '7d',
+  tokenExpire: '30d',
   tokenHead: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
 
   // 资源配置

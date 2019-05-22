@@ -73,6 +73,10 @@ exports.post = async (req, res) => {
   const withFlag = req.query['withFlag']
   const userInfo = await User.findById(userId, posterInfoFilter)
 
+  if (!userInfo) res.status(500).json(resFormat({
+    msg: err.message
+  }))
+
   let resultFields = {}
   let resultFiles = {}
   
