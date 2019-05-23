@@ -106,9 +106,21 @@ exports.getInfo = async (req, res) => {
 exports.search = async (req, res) => {
   const userId = req.userId
   let { keyword, page, size } = req.query
+  let keywordSplit = keyword.split(/[\s,。]/)
+  let filter = {
+    $or: []
+  }
+
   page = parseInt(page) || 1
   size = parseInt(size) || 15
-  const result = await User.find({ nickname: new RegExp(keyword) }, '-account -password -follows -likes')
+
+  keywordSplit.forEach(item => {
+    filter['$or'].push({
+      nickname: new RegExp(item)
+    })
+  })
+
+  const result = await User.find(filter, '-account -password -follows -likes')
     .skip((page - 1) * size)
     .limit(size)
 

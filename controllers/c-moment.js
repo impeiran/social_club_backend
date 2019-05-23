@@ -171,11 +171,23 @@ exports.like = async (req, res) => {
 exports.search = async (req, res) => {
   const userId = req.userId
   let { keyword, page, size } = req.query
-  let filter = { content: new RegExp(keyword) }
+  let keywordSplit = keyword.split(/[\s,。]/)
+  let filter = {
+    $or: []
+  }
+
   page = parseInt(page) || 1
   size = parseInt(size) || 15
 
-  _common.handleTopicInSearch(keyword)
+
+
+  keywordSplit.forEach(item => {
+    filter['$or'].push({
+      content: new RegExp(item)
+    })
+
+    _common.handleTopicInSearch(item)
+  })
 
   const result = await Moment.findMoments(userId, filter, page, size)
   res.send(resFormat({
